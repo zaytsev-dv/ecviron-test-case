@@ -1,0 +1,83 @@
+openapi: 3.0.1
+info:
+  title: Ecviron producer API
+  version: '1.0.0'
+servers:
+  - url: 'http://localhost:8081'
+    description: local
+  - url: 'https://example_test.com'
+    description: test
+  - url: 'https://example_prod.com'
+    description: prod
+paths:
+  /ecviron/produce:
+    post:
+      tags:
+        - post
+      operationId: produceEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostEventRequest'
+        required: true
+      description: 'Send event'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPostEventResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '400':
+          description: Bad Request Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+
+components:
+  schemas:
+    ErrorDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+
+    PostEventRequest:
+      type: object
+      properties:
+        seller:
+          type: string
+        customer:
+          type: string
+        productsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDTO'
+
+    ProductDTO:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+
+    GetPostEventResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        isSuccess:
+          type: boolean

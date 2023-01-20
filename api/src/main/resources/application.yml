@@ -1,0 +1,22 @@
+spring:
+  kafka:
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    bootstrap-servers: ${KAFKA_HOST_PORT:localhost:9092}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  file:
+    path: ${LOG_FILE_DIRECTORY:storage}
+  level:
+    root: info
+server:
+  http2:
+    enabled: true
+  port: 8081
+queue:
+  produce-event-topic-name: ${PRODUCE_EVENT_TOPIC:produce-event}
+
+

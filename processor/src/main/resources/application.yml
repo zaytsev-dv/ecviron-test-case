@@ -1,0 +1,23 @@
+spring:
+  kafka:
+    consumer:
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: event-group
+      properties:
+        spring.json.trusted.packages: "*"
+    bootstrap-servers: ${KAFKA_HOST_PORT:localhost:9092}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+logging:
+  file:
+    path: ${LOG_FILE_DIRECTORY:storage}
+  level:
+    root: info
+queue:
+  produce-event-name: ${PRODUCE_EVENT_TOPIC:produce-event}
+server:
+  port: 8080
+
+
